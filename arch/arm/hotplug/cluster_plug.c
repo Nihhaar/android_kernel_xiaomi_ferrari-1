@@ -152,7 +152,7 @@ static void __ref enable_big_cluster(void)
 		}
 	}
 
-	pr_info("cluster_plug: %d big cpus enabled\n", num_up);
+	pr_debug("cluster_plug: %d big cpus enabled\n", num_up);
 
 	big_cluster_enabled = true;
 }
@@ -172,7 +172,7 @@ static void disable_big_cluster(void)
 		}
 	}
 
-	pr_info("cluster_plug: %d big cpus disabled\n", num_down);
+	pr_debug("cluster_plug: %d big cpus disabled\n", num_down);
 
 	big_cluster_enabled = false;
 }
@@ -190,7 +190,7 @@ static void __ref enable_little_cluster(void)
 	}
 
 	if (!little_cluster_enabled)
-		pr_info("cluster_plug: %d little cpus enabled\n", num_up);
+		pr_debug("cluster_plug: %d little cpus enabled\n", num_up);
 
 	little_cluster_enabled = true;
 }
@@ -210,7 +210,7 @@ static void disable_little_cluster(void)
 		}
 	}
 
-	pr_info("cluster_plug: %d little cpus disabled\n", num_down);
+	pr_debug("cluster_plug: %d little cpus disabled\n", num_down);
 
 	little_cluster_enabled = false;
 }
@@ -230,7 +230,7 @@ static void cluster_plug_perform(void)
 		loaded_cpus, unloaded_cpus, vote_up, vote_down);
 
 	if (ktime_to_ms(ktime_sub(now, last_action)) > 5*sampling_time) {
-		pr_info("cluster_plug: ignoring old ts %lld\n",
+		pr_debug("cluster_plug: ignoring old ts %lld\n",
 			ktime_to_ms(ktime_sub(now, last_action)));
 		vote_up = vote_down = 0;
 	} else {
@@ -359,7 +359,7 @@ module_param_cb(low_power_mode, &param_ops_low_power_mode, &low_power_mode, 0664
 
 int __init cluster_plug_init(void)
 {
-	pr_info("cluster_plug: version %d.%d by sultanqasim and crpalmer\n",
+	pr_debug("cluster_plug: version %d.%d by sultanqasim and crpalmer\n",
 		 CLUSTER_PLUG_MAJOR_VERSION,
 		 CLUSTER_PLUG_MINOR_VERSION);
 
