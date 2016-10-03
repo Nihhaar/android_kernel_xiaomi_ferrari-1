@@ -1,0 +1,60 @@
+From 845ddd66df8af5ac8a55c5f2c82364954e1166d8 Mon Sep 17 00:00:00 2001
+From: franciscofranco <franciscofranco.1990@gmail.com>
+Date: Mon, 25 Jan 2016 16:45:23 +0530
+Subject: [PATCH] Optimized Task-Search for upto 6% increase in Performance
+
+Signed-off-by: GuneetAtwal <guneetatwal@gmail.com>
+---
+ kernel/sched/core.c | 13 +++++++++++++
+ kernel/sched/fair.c |  7 +++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index dd85ef0..dc4596e 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -5168,6 +5168,19 @@ unsigned long long task_sched_runtime(struct task_struct *p)
+ 	struct rq *rq;
+ 	u64 ns = 0;
+ 
++#if defined(CONFIG_64BIT) && defined(CONFIG_SMP)
++ /*
++	* 64-bit doesn't need locks to atomically read a 64bit value.
++	* So we have a optimization chance when the task's delta_exec is 0.
++	* Reading ->on_cpu is racy, but this is ok.
++	*
++	* If we race with it leaving cpu, we'll take a lock. So we're correct.
++	* If we race with it entering cpu, unaccounted time is 0. This is
++	* indistinguishable from the read occurring a few cycles earlier.
++	*/
++ if (!p->on_cpu)
++ return p->se.sum_exec_runtime;
++#endif
+ 	rq = task_rq_lock(p, &flags);
+ 	ns = p->se.sum_exec_runtime + do_task_delta_exec(p, rq);
+ 	task_rq_unlock(rq, p, &flags);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index f6ea12a..35023b6 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7904,7 +7904,6 @@ void idle_balance(int this_cpu, struct rq *this_rq)
+ 			continue;
+ 
+ 		if (sd->flags & SD_BALANCE_NEWIDLE) {
+-			/* If we've pulled tasks over stop searching: */
+ 			pulled_task = load_balance(balance_cpu, balance_rq,
+ 					sd, CPU_NEWLY_IDLE, &balance);
+ 		}
+@@ -7912,7 +7911,11 @@ void idle_balance(int this_cpu, struct rq *this_rq)
+ 		interval = msecs_to_jiffies(sd->balance_interval);
+ 		if (time_after(next_balance, sd->last_balance + interval))
+ 			next_balance = sd->last_balance + interval;
+-		if (pulled_task) {
++			/*
++			* Stop searching for tasks to pull if there are
++			* now runnable tasks on this rq.
++			*/
++ 			if (pulled_task || this_rq->nr_running > 0) {
+ 			balance_rq->idle_stamp = 0;
+ 			break;
+ 		}
