@@ -199,17 +199,29 @@
                         #size-cells = <0>;
                         qcom,panel-supply-entry@0 {
                                 reg = <0>;
-                                qcom,supply-name = "vdd";
-                                qcom,supply-min-voltage = <2850000>;
-                                qcom,supply-max-voltage = <2850000>;
+                                qcom,supply-name = "vddio";
+                                qcom,supply-min-voltage = <1800000>;
+                                qcom,supply-max-voltage = <1800000>;
                                 qcom,supply-enable-load = <100000>;
                                 qcom,supply-disable-load = <100>;
                         };
                         qcom,panel-supply-entry@1 {
                                 reg = <1>;
-                                qcom,supply-name = "vddio";
-                                qcom,supply-min-voltage = <1800000>;
-                                qcom,supply-max-voltage = <1800000>;
+                                qcom,supply-name = "vsp";
+                                qcom,supply-min-voltage = <2850000>;
+                                qcom,supply-max-voltage = <2850000>;
+                                qcom,supply-enable-load = <100000>;
+                                qcom,supply-disable-load = <100>;
+                                qcom,supply-pre-on-sleep = <0>;
+                                qcom,supply-post-on-sleep = <5>;
+								qcom,supply-pre-off-sleep = <0>;
+								qcom,supply-post-off-sleep = <10>;
+                        };
+                        qcom,panel-supply-entry@2 {
+                                reg = <2>;
+                                qcom,supply-name = "vsn";
+                                qcom,supply-min-voltage = <2850000>;
+                                qcom,supply-max-voltage = <2850000>;
                                 qcom,supply-enable-load = <100000>;
                                 qcom,supply-disable-load = <100>;
                         };
@@ -311,4 +323,12 @@
 };
 
 #include "dsi-panel-sim-video.dtsi"
+#include "dsi-panel-sharp-r69431-720p-video.dtsi"
+#include "dsi-panel-auo-r61318-720p-video.dtsi"
+#include "dsi-panel-sharp-nt35595-1080p-video-ram.dtsi"
+#include "dsi-panel-jdi-nt35595-1080p-video-ram.dtsi"
+#include "dsi-panel-jdi-rsp63311-1080p-video.dtsi"
+#include "dsi-panel-sharp-rsp61322-1080p-video.dtsi"
+#include "dsi-panel-auo-nt35596-1080p-video.dtsi"
+#include "dsi-panel-lgd-nt35596-1080p-video.dtsi"
 #include "dsi-panel-sim-cmd.dtsi"

@@ -168,6 +168,7 @@
 			regulator-name = "8916_l6";
 			qcom,set = <3>;
 			status = "disabled";
+			regulator-always-on;
 		};
 	};
 
