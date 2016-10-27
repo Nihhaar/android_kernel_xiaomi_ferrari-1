@@ -7,5 +7,8 @@ obj-$(CONFIG_MSM_VIDC_V4L2)     += vidc/
 obj-$(CONFIG_MSM_WFD) += wfd/
 obj-y += broadcast/
 obj-$(CONFIG_DVB_MPQ) += dvb/
+ifeq ($(CONFIG_XIAOMI_CAMERA),y)
+obj-$(CONFIG_MSMB_CAMERA) += camera_xiaomi_v2/
+else
 obj-$(CONFIG_MSMB_CAMERA) += camera_v2/
 obj-$(CONFIG_MSM_VPU) += vpu/

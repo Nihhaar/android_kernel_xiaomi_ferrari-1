@@ -33,7 +33,18 @@ config MSMB_CAMERA_DEBUG
 	---help---
 	  Enable printk() debug for msm camera 2.0
 
+menuconfig XIAOMI_CAMERA
+	bool "XIAOMI MI 4I variant of the camera stack"
+	depends on ARCH_MSM && VIDEO_V4L2 && I2C && MSMB_CAMERA && MACH_XIAOMI
+	default n
+	---help---
+          Enable the XIAOMI MI 4I camera code
+
 if MSMB_CAMERA
+if XIAOMI_CAMERA
+source "drivers/media/platform/msm/camera_xiaomi_v2/Kconfig"
+endif
+if !XIAOMI_CAMERA
 source "drivers/media/platform/msm/camera_v2/Kconfig"
 endif # MSMB_CAMERA
 
