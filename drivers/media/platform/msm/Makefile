@@ -11,4 +11,5 @@ ifeq ($(CONFIG_XIAOMI_CAMERA),y)
 obj-$(CONFIG_MSMB_CAMERA) += camera_xiaomi_v2/
 else
 obj-$(CONFIG_MSMB_CAMERA) += camera_v2/
+endif
 obj-$(CONFIG_MSM_VPU) += vpu/

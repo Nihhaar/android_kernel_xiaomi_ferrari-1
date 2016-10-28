@@ -1,6 +1,3 @@
-#ifdef CONFIG_XIAOMI_CAMERA
-#include <media/msmb_camera_xiaomi.h>
-#else
 #ifndef __LINUX_MSMB_CAMERA_H
 #define __LINUX_MSMB_CAMERA_H
 
@@ -20,8 +17,6 @@
 #define MSM_CAM_V4L2_IOCTL_NOTIFY_ERROR \
 	_IOW('V', BASE_VIDIOC_PRIVATE + 33, struct msm_v4l2_event_data)
 
-#define MSM_CAM_V4L2_IOCTL_NOTIFY_FREEZE \
-	_IOW('V', BASE_VIDIOC_PRIVATE + 34, struct msm_v4l2_event_data)
 
 #ifdef CONFIG_COMPAT
 #define MSM_CAM_V4L2_IOCTL_NOTIFY32 \
@@ -35,9 +30,6 @@
 
 #define MSM_CAM_V4L2_IOCTL_NOTIFY_ERROR32 \
 	_IOW('V', BASE_VIDIOC_PRIVATE + 33, struct v4l2_event32)
-
-#define MSM_CAM_V4L2_IOCTL_NOTIFY_FREEZE32 \
-	_IOW('V', BASE_VIDIOC_PRIVATE + 34, struct v4l2_event32)
 
 #endif
 
@@ -205,5 +197,3 @@ struct msm_camera_smmu_attach_type {
 };
 
 #endif /* __LINUX_MSMB_CAMERA_H */
-
-#endif /* CONFIG_XIAOMI_CAMERA */
