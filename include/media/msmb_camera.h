@@ -1,6 +1,3 @@
-#ifdef CONFIG_XIAOMI_CAMERA
-#include <media/msmb_camera_xiaomi.h>
-#else
 #ifndef __LINUX_MSMB_CAMERA_H
 #define __LINUX_MSMB_CAMERA_H
 
@@ -205,5 +202,3 @@ struct msm_camera_smmu_attach_type {
 };
 
 #endif /* __LINUX_MSMB_CAMERA_H */
-
-#endif /* CONFIG_XIAOMI_CAMERA */

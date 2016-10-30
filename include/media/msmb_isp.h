@@ -9,10 +9,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifdef CONFIG_XIAOMI_CAMERA
-#include <media/msmb_isp_xiaomi.h>
-#else
-
 #ifndef __MSMB_ISP__
 #define __MSMB_ISP__
 
@@ -616,5 +612,3 @@ struct msm_isp_event_data32 {
 	_IOWR('V', BASE_VIDIOC_PRIVATE+21, struct msm_isp_event_data)
 #endif
 #endif /* __MSMB_ISP__ */
-
-#endif /* CONFIG_XIAOMI_CAMERA */
