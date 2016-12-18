@@ -392,7 +392,8 @@ else {
 	}
 
 	if (flags & SYNC_FILE_RANGE_WRITE) {
-		ret = filemap_fdatawrite_range(mapping, offset, endbyte);
+		ret = __filemap_fdatawrite_range(mapping, offset, endbyte,
+						 WB_SYNC_NONE);
 		if (ret < 0)
 			goto out_put;
 	}
